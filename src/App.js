@@ -1,24 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+// import TodoList from './componets/TodoList';
+// import Calculator from './componets/Calculatore';
+// import Whethear from './componets/Whethear';
 
+// import Home from './componets/Home/Home'
+import Router from "../src/router/Router"
+// import Mail from "./componets/Mail"
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    {/* <TodoList/> */}
+    {/* <Calculator/> */}
+    {/* <Whethear/> */}
+    {/* <Home/> */}
+    <Router/>
+    {/* <Mail/> */}
+    </>
   );
 }
 
