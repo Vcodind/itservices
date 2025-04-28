@@ -6,10 +6,10 @@ const About = () => {
     <section id='about' className="bg-gray-100 py-16 px-6">
       <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-4xl font-extrabold text-gray-800">About Us</h2>
-        <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-          We are a team of passionate individuals committed to delivering quality services
-          and solutions. Our goal is to empower businesses and individuals to achieve success
-          through innovative technologies and expert support.
+        <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+          Wooden Enterprise is a rising IT company committed to providing high-quality app development, 
+          live server deployment, and project maintenance services. Founded by dynamic young entrepreneurs, 
+          we are driven by a passion for innovation and excellence.
         </p>
       </div>
 
@@ -17,8 +17,16 @@ const About = () => {
         <div className="flex flex-col justify-center items-center text-center">
           <h3 className="text-3xl font-semibold text-gray-800">Our Mission</h3>
           <p className="mt-4 text-lg text-gray-600">
-            Our mission is to provide cutting-edge technology solutions that solve real-world problems.
-            We are driven by the belief that technology can enhance lives and streamline business operations.
+            To empower businesses with reliable, innovative, and scalable digital solutions that drive real-world success.
+          </p>
+          <p className="mt-4 text-lg text-gray-600">
+            We specialize in designing and developing customized mobile and web applications that are built to perform at scale. 
+            Our expert team also ensures seamless live server management and long-term technical maintenance to keep your projects running flawlessly after launch.
+          </p>
+          <p className="mt-4 text-lg text-gray-600">
+            At Wooden Enterprise, we don't just deliver technology — we build strong partnerships with our clients, 
+            working closely with them to understand their needs and support their growth through tailored IT solutions. 
+            Whether you are a startup, SME, or enterprise, we bring deep technical expertise, fast delivery, and ongoing support to every project.
           </p>
         </div>
 

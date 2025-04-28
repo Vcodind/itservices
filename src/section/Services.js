@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaServer, FaShieldAlt, FaTools, FaNetworkWired, FaHeadset, FaDatabase, FaCode, FaLaptopCode, FaCloud, FaTimes } from 'react-icons/fa';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { Link } from 'react-scroll';
 
 const Services = () => {
   const [expandedService, setExpandedService] = useState(null);
@@ -205,6 +206,11 @@ const Services = () => {
     }
   };
 
+  // Function to close the popup after clicking contact button
+  const handleContactClick = () => {
+    setExpandedService(null);
+  };
+
   return (
     <div id='services' className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8 relative">
       {expandedService !== null && (
@@ -276,9 +282,17 @@ const Services = () => {
                 <p className="text-blue-700 mb-4">
                   Contact our team to discuss how our {services[expandedService].title.toLowerCase()} services can benefit your organization.
                 </p>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors">
+                <Link 
+                  to="contect"
+                  spy={true}
+                  smooth={true}
+                  offset={-70}
+                  duration={1000}
+                  onClick={handleContactClick}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors inline-block cursor-pointer"
+                >
                   Request a Consultation
-                </button>
+                </Link>
               </div>
             </div>
           </div>

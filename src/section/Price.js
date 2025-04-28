@@ -1,7 +1,18 @@
 import React from 'react';
 import { Link } from 'react-scroll';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from 'react';
 
 const Price = () => {
+  useEffect(() => {
+    AOS.init({
+      offset: 100,
+      duration: 800,
+      easing: 'ease-in-out',
+    });
+  }, []);
+
   const plans = [
     {
       name: "Essentials",
@@ -55,7 +66,7 @@ const Price = () => {
   return (
     <section className="py-16 bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12" data-aos="fade-down">
           <h2 className="text-3xl font-extrabold sm:text-4xl">
             Simple, Transparent Pricing
           </h2>
@@ -68,6 +79,8 @@ const Price = () => {
           {plans.map((plan, index) => (
             <div 
               key={index} 
+              data-aos="fade-up"
+              data-aos-delay={(index % 3) * 100}
               className={`rounded-xl overflow-hidden ${plan.popular 
                 ? 'bg-themepurple shadow-xl transform md:scale-105 border-2 border-blue-400' 
                 : 'bg-gray-800'}`}
@@ -80,7 +93,7 @@ const Price = () => {
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
                 <div className="flex items-baseline mb-4">
-                  <span className="text-3xl font-extrabold">${plan.price}</span>
+                  <span className="text-3xl font-extrabold">₹{plan.price}</span>
                   {plan.price !== "Custom" && <span className="ml-1 text-gray-300">/month</span>}
                 </div>
                 <p className={`mb-6 ${plan.popular ? 'text-blue-100' : 'text-gray-400'}`}>
@@ -99,9 +112,9 @@ const Price = () => {
                   </ul>
                 </div>
                 <Link 
-                  to="contect" // The id of the contact section
+                  to="contect"
                   smooth={true}
-                  duration={1000}
+                  duration={800}
                   className={`block w-full text-center py-3 px-4 rounded-md font-medium ${plan.popular 
                     ? 'bg-white text-themepurple hover:bg-gray-100' 
                     : 'bg-themepurple text-white hover:bg-blue-700'}`}
@@ -113,7 +126,7 @@ const Price = () => {
           ))}
         </div>
 
-        <div className="mt-12 text-center bg-gray-800 rounded-xl p-8">
+        <div className="mt-12 text-center bg-gray-800 rounded-xl p-8" data-aos="fade-up">
           <h3 className="text-2xl font-bold mb-4">Need a custom solution?</h3>
           <p className="text-gray-300 mb-6 max-w-3xl mx-auto">
             We understand that every business has unique IT needs. Contact us for a personalized 
@@ -121,17 +134,17 @@ const Price = () => {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 cursor-pointer">
             <Link 
-              to="contect" // The id of the contact section
+              to="contect"
               smooth={true}
-              duration={1000}
+              duration={800}
               className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
             >
               Request Custom Quote
             </Link>
             <Link 
-              to="contect" // The id of the contact section
+              to="contect"
               smooth={true}
-              duration={1000}
+              duration={800}
               className="inline-flex items-center justify-center px-5 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-gray-700"
             >
               Explore All Services

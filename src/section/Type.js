@@ -15,6 +15,11 @@ const ServerMaintenance = () => {
     AOS.refresh();
   }, []);
 
+  // Function to handle the learn more button click
+  const handleLearnMoreClick = (index) => {
+    setExpandedCard(expandedCard === index ? null : index);
+  };
+
   const services = [
     {
       name: "Enterprise Server Suite",
@@ -59,22 +64,22 @@ const ServerMaintenance = () => {
   ];
 
   return (
-    <div className='w-full lg:px-20 py-[80px] grid lg:grid-cols-3 grid-cols-1 justify-center items-start gap-6'>
+    <div className='w-full px-4 sm:px-6 md:px-10 lg:px-20 py-[50px] md:py-[80px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-start gap-4 md:gap-6'>
       {services.map((service, index) => (
         <div
           key={index}
           data-aos="zoom-in"
           data-aos-delay={(index + 1) * 100}
-          className={`flex flex-col justify-between items-start p-10 rounded-lg ${service.bgColor} text-white relative min-h-[400px]`}
+          className={`flex flex-col justify-between items-start p-5 sm:p-8 md:p-10 rounded-lg ${service.bgColor} text-white relative min-h-[350px] md:min-h-[400px] h-full`}
         >
           <div>
-            <div className="flex items-center p-4 rounded-full bg-gray-900">
+            <div className="flex items-center p-3 md:p-4 rounded-full bg-gray-900">
               {service.icon}
-              <span className="text-2xl text-themeyellow ml-3">{service.name}</span>
+              <span className="text-lg sm:text-xl md:text-2xl text-themeyellow ml-2 md:ml-3">{service.name}</span>
             </div>
-            <h1 className='text-3xl font-semibold mt-4'>{service.title}</h1>
-            <p className='text-gray-300 text-lg my-4'>{service.description}</p>
-            <ul className="space-y-2 text-gray-300 mb-6">
+            <h1 className='text-2xl md:text-3xl font-semibold mt-3 md:mt-4'>{service.title}</h1>
+            <p className='text-gray-300 text-base md:text-lg my-3 md:my-4'>{service.description}</p>
+            <ul className="space-y-2 text-gray-300 mb-4 md:mb-6 text-sm md:text-base">
               {index === 0 && (
                 <>
                   <li className="flex items-center gap-2">
@@ -115,26 +120,25 @@ const ServerMaintenance = () => {
           </div>
 
           <button
-            className='bg-themeyellow w-full px-6 py-3 rounded-lg text-black font-semibold hover:bg-yellow-500 transition-colors relative z-10'
-            onMouseEnter={() => setExpandedCard(index)}
-            onMouseLeave={() => setExpandedCard(null)}
+            className='bg-themeyellow w-full px-4 md:px-6 py-2 md:py-3 rounded-lg text-black font-semibold hover:bg-yellow-500 transition-colors relative z-10'
+            onClick={() => handleLearnMoreClick(index)}
           >
-            Learn More
+            {expandedCard === index ? 'Close Details' : 'Learn More'}
           </button>
 
           {/* Expanded Details Card */}
           {expandedCard === index && (
-            <div className="absolute inset-0 bg-gray-900 bg-opacity-90 rounded-lg p-6 flex flex-col justify-center items-start z-0">
-              <h3 className="text-xl font-bold text-themeyellow mb-4">Service Details:</h3>
-              <ul className="space-y-3">
+            <div className="absolute inset-0 bg-gray-900 bg-opacity-90 rounded-lg p-4 md:p-6 flex flex-col overflow-y-auto justify-center items-start z-20 animate-fadeIn">
+              <h3 className="text-lg md:text-xl font-bold text-themeyellow mb-3 md:mb-4">Service Details:</h3>
+              <ul className="space-y-2 md:space-y-3">
                 {service.details.map((detail, i) => (
                   <li key={i} className="flex items-start">
-                    <span className="text-themeyellow mr-2">•</span>
-                    <span className="text-gray-200">{detail}</span>
+                    <span className="text-themeyellow mr-2 flex-shrink-0">•</span>
+                    <span className="text-gray-200 text-sm md:text-base">{detail}</span>
                   </li>
                 ))}
               </ul>
-              <div className="mt-6 text-sm text-gray-400">
+              <div className="mt-4 md:mt-6 text-xs md:text-sm text-gray-400">
                 Contact us for custom solutions tailored to your infrastructure needs.
               </div>
             </div>
