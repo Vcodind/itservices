@@ -97,11 +97,20 @@ const Header = () => {
         } flex justify-between items-center gap-1 px-4 sm:px-6 lg:px-16 py-4 sticky top-0 z-50 transition-all duration-300`}
       >
         <div className="flex items-center">
-          <h1 className={`${
-            isScrolled ? 'text-xl sm:text-2xl' : 'text-xl sm:text-2xl lg:text-[30px]'
-          } text-themepurple font-bold underline italic transition-all duration-300`}>
-            Wooden Enterprise
-          </h1>
+          <Link
+            to="hero"
+            spy={true}
+            smooth={true}
+            offset={-100}
+            duration={1000}
+            className="cursor-pointer"
+          >
+            <h1 className={`${
+              isScrolled ? 'text-xl sm:text-2xl' : 'text-xl sm:text-2xl lg:text-[30px]'
+            } text-themepurple font-bold underline italic transition-all duration-300`}>
+              Wooden Enterprise
+            </h1>
+          </Link>
         </div>
         
         {/* Desktop navigation */}
@@ -144,17 +153,19 @@ const Header = () => {
             isManuopen ? 'translate-y-0' : '-translate-y-full'
           }`}
         >
+          {/* Close button in corner */}
+          <button
+            onClick={closeManu}
+            aria-label="Close menu"
+            className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-50"
+          >
+            <FaXmark className='text-white text-2xl' />
+          </button>
+          
           <div className="container mx-auto px-6 py-8 h-full flex flex-col">
             {/* Header */}
             <div className="flex justify-between items-center mb-10">
               <h2 className="text-white text-2xl font-bold">Menu</h2>
-              <button
-                onClick={closeManu}
-                aria-label="Close menu"
-                className="p-2 text-white hover:bg-white/10 rounded-full transition-colors"
-              >
-                <FaXmark className='text-white text-2xl' />
-              </button>
             </div>
             
             {/* Navigation Items */}

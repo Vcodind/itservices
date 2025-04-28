@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import ourtame from "../assets/ourtame.jpg";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { FaLightbulb, FaHandshake, FaChartLine } from 'react-icons/fa';
+import { FaLightbulb, FaHandshake, FaChartLine, FaRocket } from 'react-icons/fa';
+import { BsShieldCheck, BsGraphUp, BsLightbulbFill } from 'react-icons/bs';
 
 const About = () => {
   useEffect(() => {
@@ -86,16 +87,54 @@ const About = () => {
               </div>
             </div>
             
+            {/* Custom mission image component with abstract design elements */}
             <div data-aos="fade-left" className="order-1 md:order-2 flex justify-center">
-              <div className="relative">
-                <div className="absolute -top-4 -left-4 w-64 h-64 bg-themepurple rounded-lg opacity-10 transform -rotate-6"></div>
-                <div className="absolute -bottom-4 -right-4 w-64 h-64 bg-themeyellow rounded-lg opacity-10 transform rotate-6"></div>
-                <img 
-                  src={ourtame}
-                  alt="Our Team" 
-                  className="rounded-lg shadow-lg max-w-full relative z-10 object-cover"
-                  style={{ maxHeight: '500px' }}
-                />
+              <div className="relative w-full max-w-lg">
+                {/* Abstract design elements */}
+                <div className="absolute top-1/4 right-0 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+                <div className="absolute top-1/3 left-10 w-36 h-36 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+                <div className="absolute bottom-1/3 right-20 w-32 h-32 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+                
+                {/* Main image container with gradient border */}
+                <div className="relative bg-white p-2.5 rounded-2xl shadow-2xl border border-white z-10">
+                  {/* Gradient border effect */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-themepurple via-themeyellow to-themepurple opacity-50 blur-sm -z-10"></div>
+                  
+                  {/* Image */}
+                  <div className="rounded-xl overflow-hidden">
+                    <div className="aspect-w-4 aspect-h-3">
+                      <img 
+                        src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" 
+                        alt="Team collaboration" 
+                        className="object-cover w-full h-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Floating icon elements */}
+                <div className="absolute -top-4 -left-4 bg-white p-3 rounded-full shadow-xl z-20">
+                  <div className="bg-themepurple p-2 rounded-full">
+                    <BsLightbulbFill className="text-white text-xl" />
+                  </div>
+                </div>
+                
+                <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white p-3 rounded-full shadow-xl z-20">
+                  <div className="bg-themeyellow p-2 rounded-full">
+                    <BsGraphUp className="text-white text-xl" />
+                  </div>
+                </div>
+                
+                <div className="absolute -right-4 top-1/3 bg-white p-3 rounded-full shadow-xl z-20">
+                  <div className="bg-themepurple p-2 rounded-full">
+                    <BsShieldCheck className="text-white text-xl" />
+                  </div>
+                </div>
+                
+                {/* Caption */}
+                <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-white px-4 py-2 rounded-lg shadow-lg text-center z-20 w-max">
+                  <p className="text-sm font-medium text-gray-700">Empowering Success Through Technology</p>
+                </div>
               </div>
             </div>
           </div>
@@ -155,6 +194,33 @@ const About = () => {
           </div>
         </div>
       </div>
+      
+      {/* Add animation styles */}
+      <style jsx>{`
+        @keyframes blob {
+          0% {
+            transform: translate(0px, 0px) scale(1);
+          }
+          33% {
+            transform: translate(30px, -30px) scale(1.1);
+          }
+          66% {
+            transform: translate(-20px, 20px) scale(0.9);
+          }
+          100% {
+            transform: translate(0px, 0px) scale(1);
+          }
+        }
+        .animate-blob {
+          animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+      `}</style>
     </section>
   );
 };

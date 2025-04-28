@@ -211,78 +211,98 @@ const Services = () => {
     setExpandedService(null);
   };
 
+  // Prevent body scroll when popup is open
+  useEffect(() => {
+    if (expandedService !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [expandedService]);
+
   return (
     <div id='services' className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8 relative">
-      {/* Service detail modal with enhanced mobile responsiveness */}
+      {/* Completely redesigned service detail modal with full responsiveness */}
       {expandedService !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4 overflow-y-auto">
+        <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-3 overflow-hidden">
           <div 
-            className="bg-white rounded-xl shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto"
+            className="bg-white rounded-lg w-full max-w-[90%] sm:max-w-[80%] md:max-w-2xl lg:max-w-3xl h-[90vh] sm:h-auto sm:max-h-[85vh] flex flex-col"
             data-aos="zoom-in"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-4 sm:p-6 md:p-8">
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-                <div className="flex items-center mb-4 sm:mb-0">
-                  <div className="mr-4">
-                    {services[expandedService].icon}
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
-                    {services[expandedService].title}
-                  </h3>
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-3 sm:p-4 border-b">
+              <div className="flex items-center">
+                <div className="mr-3 flex-shrink-0">
+                  {services[expandedService].icon}
                 </div>
-                <button 
-                  onClick={() => setExpandedService(null)}
-                  className="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100 transition-colors"
-                  aria-label="Close"
-                >
-                  <FaTimes className="text-xl" />
-                </button>
+                <h3 className="text-base sm:text-xl font-bold text-gray-900 pr-2">
+                  {services[expandedService].title}
+                </h3>
               </div>
-              
-              <p className="text-base sm:text-lg text-gray-700 mb-6">
+              <button 
+                onClick={() => setExpandedService(null)}
+                className="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100 transition-colors"
+                aria-label="Close"
+              >
+                <FaTimes className="text-xl" />
+              </button>
+            </div>
+            
+            {/* Modal Content - Scrollable */}
+            <div className="flex-1 overflow-y-auto p-3 sm:p-5">
+              <p className="text-sm sm:text-base text-gray-700 mb-4">
                 {services[expandedService].detailedDescription}
               </p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-4 text-gray-900 border-b pb-2">
+              {/* Features and Benefits section */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                {/* Key Features */}
+                <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
+                  <h4 className="text-sm sm:text-base font-semibold mb-2 sm:mb-3 text-gray-900 border-b pb-2">
                     Key Features
                   </h4>
-                  <ul className="space-y-3">
+                  <ul className="space-y-2">
                     {services[expandedService].features.concat(services[expandedService].additionalFeatures).map((feature, i) => (
                       <li key={i} className="flex items-start">
-                        <svg className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="h-4 w-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
-                        <span className="text-gray-700">{feature}</span>
+                        <span className="text-xs sm:text-sm text-gray-700">{feature}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
                 
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="text-lg font-semibold mb-4 text-gray-900 border-b pb-2">
+                {/* Benefits */}
+                <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
+                  <h4 className="text-sm sm:text-base font-semibold mb-2 sm:mb-3 text-gray-900 border-b pb-2">
                     Business Benefits
                   </h4>
-                  <ul className="space-y-3">
+                  <ul className="space-y-2">
                     {services[expandedService].benefits.map((benefit, i) => (
                       <li key={i} className="flex items-start">
-                        <svg className="h-5 w-5 text-blue-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="h-4 w-4 text-blue-500 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                         </svg>
-                        <span className="text-gray-700">{benefit}</span>
+                        <span className="text-xs sm:text-sm text-gray-700">{benefit}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
               </div>
-              
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-100 shadow-inner">
-                <h4 className="text-lg font-semibold mb-2 text-blue-800">
+            </div>
+            
+            {/* Modal Footer */}
+            <div className="border-t p-3 sm:p-4">
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-lg border border-blue-100">
+                <h4 className="text-sm sm:text-base font-semibold mb-2 text-blue-800">
                   Ready to get started?
                 </h4>
-                <p className="text-blue-700 mb-4">
+                <p className="text-xs sm:text-sm text-blue-700 mb-3">
                   Contact our team to discuss how our {services[expandedService].title.toLowerCase()} services can benefit your organization.
                 </p>
                 <Link 
@@ -292,7 +312,7 @@ const Services = () => {
                   offset={-70}
                   duration={1000}
                   onClick={handleContactClick}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors inline-block cursor-pointer shadow-md hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 text-xs sm:text-sm rounded-md transition-colors inline-block cursor-pointer"
                 >
                   Request a Consultation
                 </Link>
