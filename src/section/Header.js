@@ -18,6 +18,7 @@ const Header = () => {
 
   const [isManuopen, setMenuopen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeLink, setActiveLink] = useState('hero');
 
   // Handle scroll event to change header style on scroll
   useEffect(() => {
@@ -34,6 +35,18 @@ const Header = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isManuopen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isManuopen]);
 
   const toggleManu = () => {
     setMenuopen(!isManuopen);
@@ -52,7 +65,8 @@ const Header = () => {
   ]
 
   // Close the menu when a link is clicked
-  const handleLinkClick = () => {
+  const handleLinkClick = (path) => {
+    setActiveLink(path);
     if (isManuopen) {
       closeManu();
     }
@@ -98,12 +112,12 @@ const Header = () => {
                 key={path}
                 className={`text-black text-sm uppercase font-semibold cursor-pointer px-3 xl:px-4 py-2 rounded-lg hover:bg-themepurple hover:text-white transition-all duration-300 ${
                   isScrolled ? 'py-1.5' : 'py-2'
-                }`}
+                } ${activeLink === path ? 'bg-themepurple text-white' : ''}`}
                 to={path}
                 spy={true}
                 offset={-100}
                 smooth={true}
-                onClick={handleLinkClick}
+                onClick={() => handleLinkClick(path)}
               >
                 {link}
               </Link>
@@ -111,62 +125,85 @@ const Header = () => {
           }
         </ul>
 
-        {/* Mobile menu toggle with improved animation */}
-        <div className='flex justify-center items-center lg:hidden' onClick={toggleManu}>
-          <div className="relative z-50">
-            {isManuopen ? 
-              <FaXmark className='text-themepurple text-2xl sm:text-3xl cursor-pointer animate-fade-in' /> : 
-              <FaBars className='text-themepurple text-2xl sm:text-3xl cursor-pointer animate-fade-in' />
-            }
-          </div>
-        </div>
-        
-        {/* Mobile navigation menu with improved animation and styling */}
-        <div 
-          className={`${
-            isManuopen 
-            ? 'opacity-100 translate-x-0' 
-            : 'opacity-0 translate-x-full pointer-events-none'
-          } fixed top-0 right-0 w-full xs:w-[300px] h-screen bg-themepurple p-6 pt-20 shadow-lg transition-all duration-300 ease-in-out overflow-y-auto z-40`}
+        {/* Mobile menu toggle button */}
+        <button 
+          className='flex justify-center items-center lg:hidden p-2 focus:outline-none'
+          onClick={toggleManu}
+          aria-label="Toggle menu"
+          aria-expanded={isManuopen}
         >
-          <div className="absolute top-6 right-6 lg:hidden" onClick={toggleManu}>
-            <FaXmark className='text-white text-2xl cursor-pointer' />
-          </div>
-          
-          <ul className='flex flex-col justify-start items-center gap-4 w-full mt-6'>
-            {navItems.map(({ link, path }, index) => (
-              <Link
-                key={path}
-                className={`text-white text-lg uppercase font-semibold cursor-pointer py-3 px-4 rounded-lg hover:bg-themeyellow hover:text-black w-full text-center transition-all duration-300`}
-                style={{ animationDelay: `${index * 0.1}s` }}
-                to={path}
-                spy={true}
-                offset={-100}
-                smooth={true}
-                onClick={handleLinkClick}
+          {isManuopen ? 
+            <FaXmark className='text-themepurple text-2xl sm:text-3xl cursor-pointer animate-fade-in' /> : 
+            <FaBars className='text-themepurple text-2xl sm:text-3xl cursor-pointer animate-fade-in' />
+          }
+        </button>
+        
+        {/* Mobile navigation menu - redesigned */}
+        <div 
+          className={`fixed top-0 left-0 w-full h-screen bg-gradient-to-br from-themepurple to-purple-900 transition-transform duration-300 ease-in-out z-40 lg:hidden ${
+            isManuopen ? 'translate-y-0' : '-translate-y-full'
+          }`}
+        >
+          <div className="container mx-auto px-6 py-8 h-full flex flex-col">
+            {/* Header */}
+            <div className="flex justify-between items-center mb-10">
+              <h2 className="text-white text-2xl font-bold">Menu</h2>
+              <button
+                onClick={closeManu}
+                aria-label="Close menu"
+                className="p-2 text-white hover:bg-white/10 rounded-full transition-colors"
               >
-                {link}
-              </Link>
-            ))}
+                <FaXmark className='text-white text-2xl' />
+              </button>
+            </div>
             
-            {/* Mobile contact info */}
-            <div className="mt-8 pt-8 border-t border-purple-400 w-full">
-              <div className='text-white flex flex-col gap-4 mt-4'>
-                <div className='flex items-center gap-3'>
+            {/* Navigation Items */}
+            <ul className='flex-1 flex flex-col justify-start gap-3 w-full'>
+              {navItems.map(({ link, path }, index) => (
+                <li 
+                  key={path}
+                  className="transform transition-all duration-300"
+                  style={{ 
+                    animationDelay: `${index * 0.1}s`,
+                    opacity: 0,
+                    animation: isManuopen ? `fadeInUp 0.5s ease forwards ${index * 0.1}s` : 'none'
+                  }}
+                >
+                  <Link
+                    className={`text-white text-xl sm:text-2xl font-medium block py-4 border-b border-purple-400/30 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-white after:transition-all after:duration-300 hover:after:w-1/4 ${
+                      activeLink === path ? 'after:w-1/4' : 'after:w-0'
+                    }`}
+                    to={path}
+                    spy={true}
+                    offset={-100}
+                    smooth={true}
+                    onClick={() => handleLinkClick(path)}
+                  >
+                    {link}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            
+            {/* Contact Info */}
+            <div className="mt-auto pt-6 border-t border-purple-400/30 w-full">
+              <h3 className="text-white/80 text-sm mb-4 uppercase tracking-wider">Get in touch</h3>
+              <div className='text-white flex flex-col gap-5'>
+                <a href="tel:+919978232537" className='flex items-center gap-3 hover:text-themeyellow transition-colors'>
                   <FaPhoneVolume className='size-[18px]' /> 
                   <span>+91 99782 32537</span>
-                </div>
+                </a>
                 <div className='flex items-start gap-3'>
                   <FaMapMarkerAlt className='size-[18px] mt-1 flex-shrink-0' /> 
-                  <span className='text-sm'>12, Mallinath Complex, Opp. Sujata Flats, Jain Colony, Shahibag, Ahmedabad</span>
+                  <span className='text-sm text-white/80'>12, Mallinath Complex, Opp. Sujata Flats, Jain Colony, Shahibag, Ahmedabad</span>
                 </div>
-                <div className='flex items-center gap-3'>
+                <a href="mailto:wooden.ent@hotmail.com" className='flex items-center gap-3 hover:text-themeyellow transition-colors'>
                   <MdEmail className='size-[18px]' /> 
                   <span>wooden.ent@hotmail.com</span>
-                </div>
+                </a>
               </div>
             </div>
-          </ul>
+          </div>
         </div>
       </nav>
       
