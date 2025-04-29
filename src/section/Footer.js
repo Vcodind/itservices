@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-scroll';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram, FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHomePage = location.pathname === '/';
   
   const quickLinks = [
     { name: "Home", path: "hero" },
@@ -19,6 +22,51 @@ export default function Footer() {
     "Cloud Solutions", 
     "Network Security"
   ];
+
+  // Handle navigation for links
+  const handleLinkClick = (path) => {
+    if (isHomePage) {
+      // If on homepage, use React Scroll by not doing anything special
+      // The Link component will handle scrolling
+      return;
+    } else {
+      // If on another page, navigate to home with section and trigger scroll
+      navigate('/', { state: { scrollTo: path } });
+    }
+  };
+
+  // Render appropriate link based on current page
+  const renderLink = (link, index) => {
+    if (isHomePage) {
+      // If on homepage, use React Scroll
+      return (
+        <li key={index}>
+          <Link 
+            to={link.path} 
+            spy={true}
+            smooth={true}
+            offset={-100}
+            duration={800}
+            className="text-gray-400 hover:text-themeyellow transition-colors text-sm md:text-base cursor-pointer flex items-center"
+          >
+            <span className="mr-2">›</span> {link.name}
+          </Link>
+        </li>
+      );
+    } else {
+      // If on another page, handle click with our custom function
+      return (
+        <li key={index}>
+          <span 
+            onClick={() => handleLinkClick(link.path)}
+            className="text-gray-400 hover:text-themeyellow transition-colors text-sm md:text-base cursor-pointer flex items-center"
+          >
+            <span className="mr-2">›</span> {link.name}
+          </span>
+        </li>
+      );
+    }
+  };
 
   return (
     <footer className="bg-gradient-to-b from-gray-900 to-black text-white pt-12 pb-6">
@@ -72,20 +120,7 @@ export default function Footer() {
           <div>
             <h4 className="font-bold mb-3 md:mb-4 text-lg">Quick Links</h4>
             <ul className="space-y-2">
-              {quickLinks.map((link, index) => (
-                <li key={index}>
-                  <Link 
-                    to={link.path} 
-                    spy={true}
-                    smooth={true}
-                    offset={-100}
-                    duration={800}
-                    className="text-gray-400 hover:text-themeyellow transition-colors text-sm md:text-base cursor-pointer flex items-center"
-                  >
-                    <span className="mr-2">›</span> {link.name}
-                  </Link>
-                </li>
-              ))}
+              {quickLinks.map((link, index) => renderLink(link, index))}
             </ul>
           </div>
           
@@ -135,7 +170,7 @@ export default function Footer() {
           <div className="flex space-x-4 md:space-x-8">
             <RouterLink to="/privacy-policy" className="hover:text-themeyellow transition-colors">Privacy Policy</RouterLink>
             <RouterLink to="/terms-of-service" className="hover:text-themeyellow transition-colors">Terms of Service</RouterLink>
-            <a href="#" className="hover:text-themeyellow transition-colors">Sitemap</a>
+            <RouterLink to="/sitemap" className="hover:text-themeyellow transition-colors">Sitemap</RouterLink>
           </div>
         </div>
       </div>
